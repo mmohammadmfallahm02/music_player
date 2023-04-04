@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:music_player_app/models/models.dart';
+
+import '../common/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -46,6 +50,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final List<Song> songs = Song.songs;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -60,7 +65,42 @@ class HomeScreen extends StatelessWidget {
         appBar: const _BuildCustomAppBar(),
         bottomNavigationBar: const _BuildCustomNavBar(),
         body: SingleChildScrollView(
-          child: Column(children: [_discoverMusicWidget(themeData)]),
+          child: Column(children: [
+            _discoverMusicWidget(themeData),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                top: 20.0,
+                bottom: 20.0,
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: SectionHeader(
+                      themeData: themeData,
+                      title: 'Trending Music',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: Get.size.height * 0.27,
+                    child: ListView.builder(
+                        itemCount: songs.length,
+                      
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final song = songs[index];
+                          return SongCard(song: song);
+                        }),
+                  )
+                ],
+              ),
+              
+            )
+          ]),
         ),
       ),
     );
