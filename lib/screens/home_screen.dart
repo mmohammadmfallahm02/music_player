@@ -82,6 +82,25 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildPlaylistWidget(ThemeData themeData, List<Playlist> playlists) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          SectionHeader(themeData: themeData, title: 'Playlists'),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: playlists.length,
+              padding: const EdgeInsets.only(top: 20.0),
+              itemBuilder: (context, index) {
+                final playlist = playlists[index];
+                return PlaylistCard(playlist: playlist, themeData: themeData);
+              })
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
@@ -104,23 +123,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(children: [
             _buildDiscoverMusicWidget(themeData),
             _buildTrendingMusicWidget(themeData, songs),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  SectionHeader(themeData: themeData, title: 'Playlists'),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: playlists.length,
-                      padding: const EdgeInsets.only(top: 20.0),
-                      itemBuilder: (context, index) {
-                        final playlist = playlists[index];
-                        return PlaylistCard(
-                            playlist: playlist, themeData: themeData);
-                      })
-                ],
-              ),
-            )
+            _buildPlaylistWidget(themeData, playlists)
           ]),
         ),
       ),
@@ -138,9 +141,11 @@ class _BuildCustomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: false,
+      showUnselectedLabels: false,
       backgroundColor: Colors.deepPurple.shade800,
       unselectedItemColor: Colors.white,
       selectedItemColor: Colors.white,
+      // currentIndex: 2,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
