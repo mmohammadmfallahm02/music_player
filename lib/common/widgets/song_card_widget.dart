@@ -52,12 +52,13 @@ class SongCard extends StatelessWidget {
     return Container(
       width: Get.size.width * 0.45,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-              image: AssetImage(
-                song.coverUrl,
-              ),
-              fit: BoxFit.cover)),
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+            image: AssetImage(
+              song.coverUrl,
+            ),
+            fit: BoxFit.cover),
+      ),
     );
   }
 

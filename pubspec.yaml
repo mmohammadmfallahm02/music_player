@@ -39,6 +39,7 @@ dependencies:
   just_audio: ^0.9.32
   get: ^4.6.5
   google_fonts: ^4.0.3
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

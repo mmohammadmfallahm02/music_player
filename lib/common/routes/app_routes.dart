@@ -11,12 +11,12 @@ class AppRoutes {
     ),
     // song screen
     GetPage(
-      name: RouteName.homeScreen,
+      name: RouteName.songScreen,
       page: () => const SongScreen(),
     ),
     // playlist screen
     GetPage(
-      name: RouteName.homeScreen,
+      name: RouteName.playlistScreen,
       page: () => const PlaylistScreen(),
     ),
   ];

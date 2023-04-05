@@ -1,13 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_app/models/models.dart';
-
 import '../common/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  Widget _discoverMusicWidget(ThemeData themeData) {
+  Widget _buildDiscoverMusicWidget(ThemeData themeData) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -47,10 +48,45 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildTrendingMusicWidget(ThemeData themeData, List<Song> songs) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20.0,
+        top: 20.0,
+        bottom: 20.0,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: SectionHeader(
+              themeData: themeData,
+              title: 'Trending Music',
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            height: Get.size.height * 0.27,
+            child: ListView.builder(
+                itemCount: songs.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  final song = songs[index];
+                  return SongCard(song: song);
+                }),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final List<Song> songs = Song.songs;
+    final List<Playlist> playlists = Playlist.playlists;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -66,39 +102,24 @@ class HomeScreen extends StatelessWidget {
         bottomNavigationBar: const _BuildCustomNavBar(),
         body: SingleChildScrollView(
           child: Column(children: [
-            _discoverMusicWidget(themeData),
+            _buildDiscoverMusicWidget(themeData),
+            _buildTrendingMusicWidget(themeData, songs),
             Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                top: 20.0,
-                bottom: 20.0,
-              ),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: SectionHeader(
-                      themeData: themeData,
-                      title: 'Trending Music',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: Get.size.height * 0.27,
-                    child: ListView.builder(
-                        itemCount: songs.length,
-                      
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final song = songs[index];
-                          return SongCard(song: song);
-                        }),
-                  )
+                  SectionHeader(themeData: themeData, title: 'Playlists'),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: playlists.length,
+                      padding: const EdgeInsets.only(top: 20.0),
+                      itemBuilder: (context, index) {
+                        final playlist = playlists[index];
+                        return PlaylistCard(
+                            playlist: playlist, themeData: themeData);
+                      })
                 ],
               ),
-              
             )
           ]),
         ),
@@ -147,9 +168,12 @@ class _BuildCustomAppBar extends StatelessWidget with PreferredSizeWidget {
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 20),
-          child: const CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
+          child: CachedNetworkImage(
+            imageUrl:
+                "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+            imageBuilder: (context, imageProvider) =>
+                CircleAvatar(backgroundImage: imageProvider),
+            placeholder: (context, url) => const CupertinoActivityIndicator(),
           ),
         )
       ],
