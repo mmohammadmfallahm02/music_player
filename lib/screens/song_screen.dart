@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player_app/models/models.dart';
+// ignore: depend_on_referenced_packages
 import 'package:rxdart/rxdart.dart' as rxdart;
 import '../common/widgets/widgets.dart';
 

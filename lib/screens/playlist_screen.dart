@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_player_app/common/routes/app_routes.dart';
 import 'package:music_player_app/common/routes/name_routes.dart';
 import '../models/models.dart';
 

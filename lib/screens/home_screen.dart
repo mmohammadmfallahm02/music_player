@@ -70,6 +70,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: Get.size.height * 0.27,
             child: ListView.builder(
+                physics: const ClampingScrollPhysics(),
                 itemCount: songs.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
@@ -91,6 +92,7 @@ class HomeScreen extends StatelessWidget {
           ListView.builder(
               shrinkWrap: true,
               itemCount: playlists.length,
+              physics: const ClampingScrollPhysics(),
               padding: const EdgeInsets.only(top: 20.0),
               itemBuilder: (context, index) {
                 final playlist = playlists[index];
