@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_player_app/common/routes/app_routes.dart';
+import 'package:music_player_app/common/routes/name_routes.dart';
 import '../models/models.dart';
 
 class PlaylistScreen extends StatelessWidget {
@@ -31,26 +33,38 @@ class PlaylistScreen extends StatelessWidget {
 
   Widget _buildPlaylistSongWidget(Playlist playlist, ThemeData themeData) {
     return ListView.builder(
+        padding: const EdgeInsets.only(top: 25),
         physics: const NeverScrollableScrollPhysics(),
         itemCount: playlist.songs.length,
         shrinkWrap: true,
         itemBuilder: ((context, index) {
           final song = playlist.songs[index];
-          return ListTile(
-            leading: Text(
-              '${index + 1}',
-              style: themeData.textTheme.bodyMedium!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            title: Text(
-              song.title,
-              style: themeData.textTheme.bodyLarge!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text('${song.description} .02:45'),
-            trailing: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(RouteName.songScreen,arguments: song);
+              },
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                tileColor: Colors.deepPurple.shade200.withOpacity(0.2),
+                leading: Text(
+                  '${index + 1}',
+                  style: themeData.textTheme.bodyMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                title: Text(
+                  song.title,
+                  style: themeData.textTheme.bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text('${song.description} ⚬ 02:45'),
+                trailing: const Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+              ),
             ),
           );
         }));
@@ -110,7 +124,7 @@ class _PlayOrShuffleSwitchState extends State<PlayOrShuffleSwitch> {
   bool isPlay = true;
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
+    final double width = Get.width;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -119,14 +133,14 @@ class _PlayOrShuffleSwitchState extends State<PlayOrShuffleSwitch> {
       },
       child: Container(
         height: 50,
-        width: Get.size.width,
+        width: width,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
         child: Stack(
           children: [
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
-              left: isPlay ? 0 : width * 0.45,
+              left: isPlay ? 0 : width * 0.46,
               child: Container(
                 height: 50,
                 width: width * 0.45,
