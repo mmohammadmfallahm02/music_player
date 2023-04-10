@@ -139,7 +139,7 @@ class _PlayOrShuffleSwitchState extends State<PlayOrShuffleSwitch> {
           children: [
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
-              left: isPlay ? 0 : width * 0.46,
+              left: isPlay ? 0 : width * 0.453,
               child: Container(
                 height: 50,
                 width: width * 0.45,
