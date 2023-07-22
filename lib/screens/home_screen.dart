@@ -161,7 +161,7 @@ class _BuildCustomNavBar extends StatelessWidget {
   }
 }
 
-class _BuildCustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class _BuildCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const _BuildCustomAppBar({
     Key? key,
   }) : super(key: key);
